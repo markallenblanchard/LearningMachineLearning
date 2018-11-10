@@ -3,10 +3,10 @@ function setup() {
 	let b = new Matrix(2, 3);
 	a.randomize();
 	b.randomize();
-	console.table(a.matrix);
-	console.table(b.matrix);
-	let e = a.add(b);
-	console.table(e.matrix);
+	console.table(a.data);
+	console.table(b.data);
+	let e = Matrix.multiply(a, b);
+	console.table(e.data);
 	// console.table(b.matrix);
 	// let d = a.transpose();
 

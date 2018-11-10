@@ -19,21 +19,23 @@ class Matrix {
 		}
 	}
 	add(n) {
+		let result = new Matrix(this.rows, this.cols);
 		//element-wise add
 		if (n instanceof Matrix) {
 			for (let i = 0; i < this.rows; i++) {
 				for (let j = 0; j < this.cols; j++) {
-					this.matrix[i][j] += n.matrix[i][j];
+					result.matrix[i][j] += n.matrix[i][j] + this.matrix[i][j];
 				}
 			}
 		} else {
 			//scalar add
 			for (let i = 0; i < this.rows; i++) {
 				for (let j = 0; j < this.cols; j++) {
-					this.matrix[i][j] += n;
+					result.matrix[i][j] += n;
 				}
 			}
 		}
+		return result;
 	}
 	multiply(n) {
 		if (n instanceof Matrix) {

@@ -31,10 +31,22 @@ class Matrix {
 	randomize() {
 		for (let i = 0; i < this.rows; i++) {
 			for (let j = 0; j < this.cols; j++) {
-				this.data[i][j] = Math.floor(Math.random() * 2 - 1);
+				this.data[i][j] = Math.random() * 2 - 1;
 			}
 		}
 	}
+
+	// Subtracts one matrix from another
+	static subtract(a, b) {
+		let result = new Matrix(a.rows, a.cols);
+		for (let i = 0; i < result.rows; i++) {
+			for (let j = 0; j < result.cols; j++) {
+				result.data[i][j] = a.data[i][j] - b.data[i][j];
+			}
+		}
+		return result;
+	}
+
 	add(n) {
 		let result = new Matrix(this.rows, this.cols);
 		//element-wise add
@@ -76,21 +88,30 @@ class Matrix {
 		}
 	}
 	multiply(n) {
-		//scalar product
 		let result = new Matrix(this.rows, this.cols);
-		for (let i = 0; i < this.rows; i++) {
-			for (let j = 0; j < this.cols; j++) {
-				result.data[i][j] = n * this.data[i][j];
+		if (n instanceof Matrix) {
+			// hadamard product
+			for (let i = 0; i < this.rows; i++) {
+				for (let j = 0; j < this.cols; j++) {
+					result.data[i][j] = n.data[i][j] * this.data[i][j];
+				}
+			}
+		} else {
+			//scalar product
+			for (let i = 0; i < this.rows; i++) {
+				for (let j = 0; j < this.cols; j++) {
+					result.data[i][j] = n * this.data[i][j];
+				}
 			}
 		}
 		return result;
 	}
 
-	transpose() {
-		const result = new Matrix(this.cols, this.rows);
+	static transpose(matrix) {
+		const result = new Matrix(matrix.cols, matrix.rows);
 		for (let i = 0; i < this.rows; i++) {
 			for (let j = 0; j < this.cols; j++) {
-				result.data[j][i] = this.data[i][j];
+				result.data[j][i] = matrix.data[i][j];
 			}
 		}
 		return result;
@@ -101,12 +122,21 @@ class Matrix {
 	}
 
 	map(func) {
-		//scalar add
 		let result = new Matrix(this.rows, this.cols);
 		for (let i = 0; i < this.rows; i++) {
 			for (let j = 0; j < this.cols; j++) {
-				result.data[i][j] = func(result.data[i][j]);
+				this.data[i][j] = func(this.data[i][j]);
 			}
 		}
+	}
+	static map(matrix, func) {
+		// apply a function to every element of the matrix
+		let result = new Matrix(matrix.rows, matrix.cols);
+		for (let i = 0; i < result.rows; i++) {
+			for (let j = 0; j < result.cols; j++) {
+				result.data[i][j] = func(matrix.data[i][j]);
+			}
+		}
+		return result;
 	}
 }

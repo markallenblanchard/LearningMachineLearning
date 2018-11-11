@@ -1,22 +1,33 @@
+let trainingData = [
+	//XOr Problem
+	{
+		inputs: [ 0, 1 ],
+		target: [ 1 ]
+	},
+	{
+		inputs: [ 1, 1 ],
+		target: [ 0 ]
+	},
+	{
+		inputs: [ 1, 0 ],
+		target: [ 1 ]
+	},
+	{
+		inputs: [ 0, 0 ],
+		target: [ 0 ]
+	}
+];
+
 function setup() {
-	// let a = new Matrix(2, 3);
-	// let b = new Matrix(3, 2);
-	// a.randomize();
-	// b.randomize();
-	// console.table(a.data);
-	// console.table(b.data);
-	// let e = Matrix.multiply(a, b);
-	// console.table(e.data);
-	// console.table(b.matrix);
-	// let d = a.transpose();
-
-	// let c = a.multiply(b);
-	// console.table(c.matrix);
-
 	let nn = new NeuralNetwork(2, 2, 1);
 
-	let input = [ 1, 0 ];
+	for (let i = 0; i < 10000; i++) {
+		let data = trainingData[Math.floor(Math.random() * trainingData.length)];
+		nn.train(data.inputs, data.target);
+	}
 
-	let output = nn.feedforward(input);
-	console.log(output);
+	console.log(nn.feedforward([ 0, 1 ]));
+	console.log(nn.feedforward([ 1, 1 ]));
+	console.log(nn.feedforward([ 1, 0 ]));
+	console.log(nn.feedforward([ 0, 0 ]));
 }
